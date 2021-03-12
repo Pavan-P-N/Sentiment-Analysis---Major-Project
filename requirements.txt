@@ -4,3 +4,4 @@ sklearn
 nltk
 numpy
 string
+emoji
