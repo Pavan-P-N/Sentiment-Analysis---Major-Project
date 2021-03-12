@@ -2,7 +2,7 @@ import streamlit as st
 st.title('Sentiment Analysis')
 import pandas as pd
 import emoji
-df = pd.read_csv('/content/drive/MyDrive/Re_Data.csv')
+df = pd.read_csv('Re_Data.csv')
 df =df.iloc[0:5000]
 df.dropna(inplace=True)
 import string
