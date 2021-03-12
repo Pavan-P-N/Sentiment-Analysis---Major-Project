@@ -1,36 +1,31 @@
 import streamlit as st
-st.title('Sentiment Analysis using Python')
+st.title('Sentiment Analysis')
 import pandas as pd
-df = pd.read_csv('Re_Data.csv')
-df = df.iloc[0:5000]
-import numpy as np
-df = df.replace(np.nan, ' ', regex=True)
+import emoji
+df = pd.read_csv('/content/drive/MyDrive/Re_Data.csv')
+df =df.iloc[0:5000]
+df.dropna(inplace=True)
 import string
 df['clean_comment'] = df['clean_comment'].str.replace('[^\w\s]','')
-df.clean_comment = df.clean_comment.str.replace('\d+', '')
-import nltk
-nltk.download('punkt')
-nltk.download('wordnet')
-from nltk.stem.snowball import PorterStemmer
-ps = PorterStemmer()
-for i in range(0, len(df)):
-  df.clean_comment[i] = ps.stem(df.clean_comment[i]) # for word in df.clean_comment[i]]
-x = df['category'].values
-y = df['clean_comment'].values
+df.clean_comment = df.clean_comment.str.replace('\d+','')
+x = df.iloc[:,0]
+y = df.iloc[:,1]
 from sklearn.model_selection import train_test_split
 x_train,x_test,y_train,y_test = train_test_split(x,y,test_size = 0.3, random_state = 0)
-import numpy as np
-np.unique(y_train,return_counts=True)
-np.unique(y_test,return_counts=True)
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import SVC
 text_model = Pipeline([('tfidf',TfidfVectorizer()),('model',SVC())]) 
 text_model.fit(x_train, y_train)
-y_pred = text_model.predict(x_test)
-from sklearn.metrics import accuracy_score,classification_report,confusion_matrix
 select = st.text_input('Enter your message')
 op = text_model.predict([select])
-st.title(op[0])
-
+if op[0] == "Positive":
+  st.title(op)
+  st.title(emoji.emojize(':smile:'))
+elif op[0]=="Neutral":
+  st.title(op)
+  st.title(emoji.emojize(':expressionless:'))
+elif op[0]=="Negative":
+  st.title(op)
+  st.title(emoji.emojize(':worried:'))
 
