@@ -29,3 +29,6 @@ text_model = Pipeline([('tfidf',TfidfVectorizer()),('model',SVC())])
 text_model.fit(x_train, y_train)
 y_pred = text_model.predict(x_test)
 from sklearn.metrics import accuracy_score,classification_report,confusion_matrix
+select = st.text_input('Enter your message')
+op = text_model.predict([select])
+st.title(op[0])
