@@ -2,7 +2,7 @@ import streamlit as st
 st.title('Sentiment Analysis using Python')
 import pandas as pd
 df = pd.read_csv('Re_Data.csv')
-df = df.iloc[0:11000]
+df = df.iloc[0:5000]
 import numpy as np
 df = df.replace(np.nan, ' ', regex=True)
 import string
